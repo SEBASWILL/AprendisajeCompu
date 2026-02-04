@@ -12,7 +12,7 @@ public class P15 {
 
         inter.imprimirTablero(M_JUEGO.get());
 
-        int moviento;
+    
 
         int opcion;
 
@@ -40,13 +40,8 @@ public class P15 {
 
             ordenar(M_JUEGO);
 
-         
-            while (!M_JUEGO.equals(M_SOL)) {
-                M_JUEGO.GirarH();
-
-              
-            }
-               System.out.println("Después de ordenar:");
+      
+            System.out.println("Después de ordenar:");
 
         } else {
             System.out.println("Opción inválida.");
@@ -383,6 +378,14 @@ public class P15 {
         meterGusano(O, 5, 9);
 
         O.imprimirTablero();
+
+        encontrado = O.buscarN(1);
+        while (encontrado[0] != 0 || encontrado[1] != 0 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 3) {
+
+            O.GirarH();
+            encontrado = O.buscarN(1);
+
+        }
 
     }
 
