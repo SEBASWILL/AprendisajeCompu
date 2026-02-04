@@ -60,7 +60,7 @@ public class MATRIZ {
                         x = i;
                         y = j;
                     } else {
-                        M[i][j] = String.valueOf(contador_p -3);
+                        M[i][j] = String.valueOf(contador_p - 1);
                         contador_p++;
                     }
                 }
@@ -119,9 +119,6 @@ public class MATRIZ {
         lista.add(6);
         lista.add(4);
         lista.add(2);
-        lista.add(8);
-        lista.add(6);
-        lista.add(4);
         lista.add(2);
         lista.add(8);
         lista.add(6);
@@ -130,6 +127,11 @@ public class MATRIZ {
         lista.add(8);
         lista.add(6);
         lista.add(4);
+        lista.add(2);
+        lista.add(8);
+        lista.add(6);
+        lista.add(4);
+        lista.add(2);
         lista.add(2);
         lista.add(8);
         lista.add(6);
@@ -145,10 +147,12 @@ public class MATRIZ {
         lista.add(2);
 
         int a;
-        for (int i = 0; i < 100000; i++) {
+        System.out.println("moviendo aleatoriamente");
+        for (int i = 0; i < 100000000; i++) {
             a = rand.nextInt(lista.size());
 
             Movimiento_al(a);
+
         }
 
     }
@@ -277,7 +281,6 @@ public class MATRIZ {
 
                 if (M[i][j].equals(String.valueOf(b))) {
 
-                   
                     return new int[]{i, j};
                 }
             }
@@ -314,7 +317,7 @@ public class MATRIZ {
             } else {
                 Movimiento(4); // derecha
             }
-      
+
             return;
         }
 
@@ -359,6 +362,11 @@ public class MATRIZ {
             GirarH();
 
         }
+    }
+
+    public boolean winner() {
+        MATRIZ M_SOL = new MATRIZ(true);
+        return this.M.equals(M_SOL);
     }
 
     @Override

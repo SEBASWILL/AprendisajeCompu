@@ -11,31 +11,61 @@ public class P15 {
         UI inter = new UI();
 
         inter.imprimirTablero(M_JUEGO.get());
-        System.out.println(M_JUEGO.getBlanco());
-//        int moviento;
-//        while (!M_JUEGO.equals(M_SOL)) {
-//            System.out.println(M_JUEGO.getBlanco());
-//            System.out.println("Pasos hechos: " + M_JUEGO.getNPasos());
-//            System.out.println("Para moverte (8 6 2 4 )");
-//            moviento = sc.nextInt();
-//            M_JUEGO.Movimiento(moviento);
-//            inter.imprimirTablero(M_JUEGO.get());
-        System.out.println("asi incio");
-        inter.imprimirTablero(M_JUEGO.get());
-        orden_3(M_JUEGO);
-        inter.imprimirTablero(M_JUEGO.get());
 
-//        }
+        int moviento;
+
+        int opcion;
+
+        System.out.println("¿Qué deseas hacer?");
+        System.out.println("1. Jugar el Puzzle 15");
+        System.out.println("2. Que el sistema lo arme solo");
+        opcion = sc.nextInt();
+
+        if (opcion == 1) {
+            // ===== MODO JUGAR =====
+            while (!M_JUEGO.equals(M_SOL)) {
+                System.out.println("Posición del blanco: " + M_JUEGO.getBlanco());
+                System.out.println("Pasos hechos: " + M_JUEGO.getNPasos());
+                System.out.println("Para moverte usa (8 = arriba, 6 = derecha, 2 = abajo, 4 = izquierda)");
+
+                int movimiento = sc.nextInt();
+                M_JUEGO.Movimiento(movimiento);
+                inter.imprimirTablero(M_JUEGO.get());
+            }
+
+        } else if (opcion == 2) {
+            // ===== MODO AUTOMÁTICO =====
+            System.out.println("Así inicia:");
+            inter.imprimirTablero(M_JUEGO.get());
+
+            ordenar(M_JUEGO);
+
+         
+            while (!M_JUEGO.equals(M_SOL)) {
+                M_JUEGO.GirarH();
+
+              
+            }
+               System.out.println("Después de ordenar:");
+
+        } else {
+            System.out.println("Opción inválida.");
+        }
+
         System.out.println("lo solucion en: " + M_JUEGO.getNPasos());
 
     }
+
+    public static void ordenar(MATRIZ O) {
+        orden_l(O);
+        System.out.println("ya quedo la l ");
+        gusano(O);
+    }
+
     // =====================================================
     // ORDENAR SOLO 6, 7 y 10
     // =====================================================
-
-    public static void orden_3(MATRIZ O) {
-
-        Scanner sc = new Scanner(System.in);
+    public static void orden_l(MATRIZ O) {
 
         int[] encontrado;
         System.out.println("moviendo el blanco");
@@ -124,7 +154,7 @@ public class P15 {
             }
             encontrado = O.buscarN(6);
 
-            while (encontrado[0] != 0 || encontrado[1] != 1) {
+            while (encontrado[0] != 0 || encontrado[1] != 1 || O.getBlanco()[0] != 0 || O.getBlanco()[1] != 0) {
                 O.GirarH();
                 O.imprimirTablero();
                 encontrado = O.buscarN(6);
@@ -141,6 +171,8 @@ public class P15 {
 
         }
 
+        System.out.println("inciamos con el 7");
+
         encontrado = O.buscarN(7);
 
         if (encontrado[0] == 1 && encontrado[1] == 2) {
@@ -152,19 +184,24 @@ public class P15 {
 
                 /// caso 3 que es es en 2 y 1
             
-                     if ((encontrado[0] == 2 && encontrado[1] == 1)) {
+                if ((encontrado[0] == 2 && encontrado[1] == 1)) {
+                    System.out.println("esta donde deberia ir el 10");
 
                     System.out.println("posiocion inconrrecta");
                     while ((O.getBlanco()[0] != 3 || O.getBlanco()[1] != 1)) {
-                        System.out.println("girando hasta que el blanco este en x 3  y 0");
+                        System.out.println("girando hasta que el blanco este en x 3  y 1");
                         O.GirarH();
                         O.imprimirTablero();
                         System.out.println(O.getBlanco()[0] + "" + O.getBlanco()[1]);
 
                     }
+
                     System.out.println("el blanco esta en: ");
 
                     System.out.println(O.getBlanco()[0] + " " + O.getBlanco()[1]);
+
+                    O.imprimirTablero();
+                    System.out.println("blanco en posicion");
 
                     O.Movimiento(2);
                     O.Movimiento(6);
@@ -187,7 +224,7 @@ public class P15 {
 
                     System.out.println(O.getBlanco()[0] + " " + O.getBlanco()[1]);
 
-                    int[] p = O.buscarN(6);
+                    int[] p = O.buscarN(7);
                     System.out.println("el 6 esta en: ");
                     System.out.println(p[0] + " " + p[1]);
                     O.Movimiento(6);
@@ -197,22 +234,30 @@ public class P15 {
 
             }
             encontrado = O.buscarN(7);
-            while (encontrado[0] != 1 || encontrado[1] != 3) {
+
+            System.out.println("el 7 esta en:  " + encontrado[0] + " " + encontrado[1]);
+
+            while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 0 || O.getBlanco()[1] != 2) {
                 O.GirarH();
                 O.imprimirTablero();
                 encontrado = O.buscarN(7);
             }
 
-            O.imprimirTablero();
-            O.Movimiento(6);
+            System.out.println("el 7 esta en:  " + encontrado[0] + " " + encontrado[1]);
+            System.out.println("el blanco esta en:  " + O.getBlanco()[0] + " " + O.getBlanco()[1]);
+
             O.imprimirTablero();
             O.Movimiento(8);
             O.imprimirTablero();
             O.Movimiento(4);
             O.imprimirTablero();
+            System.out.println("el 7 esta en:  " + encontrado[0] + " " + encontrado[1]);
+            System.out.println("el blanco esta en:  " + O.getBlanco()[0] + " " + O.getBlanco()[1]);
+
             O.Moverh();
             O.imprimirTablero();
         }
+
         encontrado = O.buscarN(10);
 
         if (encontrado[0] == 2 && encontrado[1] == 1) {
@@ -237,8 +282,9 @@ public class P15 {
                     System.out.println(O.getBlanco()[0] + " " + O.getBlanco()[1]);
 
                     int[] p = O.buscarN(10);
-                    System.out.println("el 6 esta en: ");
+                    System.out.println("el 10 esta en: ");
                     System.out.println(p[0] + " " + p[1]);
+
                     O.Movimiento(6);
                     O.Movimiento(8);
 
@@ -246,7 +292,7 @@ public class P15 {
 
             }
             encontrado = O.buscarN(10);
-            while (encontrado[0] != 3 || encontrado[1] != 0) {
+            while (encontrado[0] != 2 || encontrado[1] != 0 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 1) {
                 O.GirarH();
                 O.imprimirTablero();
                 encontrado = O.buscarN(10);
@@ -254,19 +300,122 @@ public class P15 {
             }
 
             O.imprimirTablero();
-            O.Movimiento(6);
-            O.imprimirTablero();
             O.Movimiento(2);
             O.imprimirTablero();
-            O.Movimiento(4);
-            O.imprimirTablero();
-            O.Movimiento(8);
-            O.imprimirTablero();
+            O.Movimiento(6);
 
             O.Moverh();
             O.imprimirTablero();
         }
+    }
 
+    public static void gusano(MATRIZ O) {
+        /// buscar el 1
+        ///
+        Scanner sc = new Scanner(System.in);
+
+        int[] encontrado = O.buscarN(2);
+
+        if (encontrado[0] != 2 || encontrado[1] != 2) {
+            while (encontrado[0] != 2 || encontrado[1] != 3 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 2) {
+                O.GirarH();
+                O.imprimirTablero();
+                encontrado = O.buscarN(2);
+            }
+
+            O.Movimiento(2);
+            O.Movimiento(4);
+
+        }
+        System.out.println("el 2 esta en 2 2 ");
+
+        encontrado = O.buscarN(1);
+        while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
+
+            O.GirarH();
+            encontrado = O.buscarN(1);
+
+        }
+
+        System.out.println("el 1 esta en posicion pora gusano");
+
+        O.Movimiento(6);
+        O.Movimiento(8);
+
+        System.out.println("ahora vamos con el siguiente");
+
+        System.out.println("buscanco el 3 ");
+        encontrado = O.buscarN(3);
+
+        if (encontrado[0] != 2 || encontrado[1] != 2) {
+
+            while (encontrado[0] != 2 || encontrado[1] != 3 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 2) {
+                O.GirarH();
+                O.imprimirTablero();
+                encontrado = O.buscarN(3);
+            }
+            O.Movimiento(2);
+            O.Movimiento(4);
+
+        }
+
+        encontrado = O.buscarN(2);
+        while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
+
+            O.GirarH();
+            encontrado = O.buscarN(2);
+
+        }
+
+        System.out.println("el 3 esta en posicion para gusano ");
+        System.out.println("el 2 esta en posicion pora gusano");
+        O.Movimiento(6);
+        O.Movimiento(8);
+
+        meterGusano(O, 4, 3);
+        meterGusano(O, 8, 4);
+        meterGusano(O, 12, 8);
+        meterGusano(O, 15, 12);
+
+        meterGusano(O, 14, 15);
+        meterGusano(O, 13, 14);
+        meterGusano(O, 9, 13);
+        meterGusano(O, 5, 9);
+
+        O.imprimirTablero();
+
+    }
+
+    public static void meterGusano(MATRIZ O, int a, int b) {
+
+        System.out.println("vamos con el 12");
+        System.out.println("buscanco el 12 ");
+        int[] encontrado = O.buscarN(a);
+
+        if (encontrado[0] != 2 || encontrado[1] != 2) {
+
+            while (encontrado[0] != 2 || encontrado[1] != 3 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 2) {
+                O.GirarH();
+                O.imprimirTablero();
+                encontrado = O.buscarN(a);
+            }
+            O.Movimiento(2);
+            O.Movimiento(4);
+
+        }
+
+        encontrado = O.buscarN(b);
+        while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
+
+            O.GirarH();
+            encontrado = O.buscarN(b);
+
+        }
+
+        System.out.println("el " + a + " esta en posicion para gusano ");
+        System.out.println("el " + b + "  esta en posicion pora gusano");
+        O.Movimiento(6);
+        O.Movimiento(8);
     }
 
 }
