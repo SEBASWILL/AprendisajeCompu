@@ -49,22 +49,36 @@ public class MATRIZ {
         M = new String[tamaño][tamaño];
         int contador_p = 1;
 
-        // 1️⃣ Construir matriz base válida
-        // 2️⃣ Caso especial: quiero el 6 en (1,2)
         if (!A) {
 
-            for (int i = 0; i < M.length; i++) {
-                for (int j = 0; j < M[i].length; j++) {
-                    if (i == tamaño - 1 && j == tamaño - 1) {
-                        M[i][j] = " ";
-                        x = i;
-                        y = j;
-                    } else {
-                        M[i][j] = String.valueOf(contador_p - 1);
-                        contador_p++;
-                    }
+//            for (int i = 0; i < M.length; i++) {
+//                for (int j = 0; j < M[i].length; j++) {
+//                    if (i == tamaño - 1 && j == tamaño - 1) {
+//                        M[i][j] = " ";
+//                        x = i;
+//                        y = j;
+//                    } else {
+//                        M[i][j] = String.valueOf(contador_p);
+//                        contador_p++;
+//                    }
+//                }
+//            }
+            String[] valores = {
+                "1", "2", "3", "4",
+                "5", "6", "7", "8",
+                "9", "10", "11", "12",
+                "15", "13", "14", " "
+            };
+
+            int k = 0;
+            for (int i = 0; i < tamaño; i++) {
+                for (int j = 0; j < tamaño; j++) {
+                    M[i][j] = valores[k++];
                 }
             }
+
+            x = 3;
+            y = 0;
         } else {
             for (int i = 0; i < M.length; i++) {
                 for (int j = 0; j < M[i].length; j++) {

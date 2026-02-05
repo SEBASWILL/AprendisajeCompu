@@ -9,17 +9,18 @@ public class P15 {
         MATRIZ M_JUEGO = new MATRIZ();
         MATRIZ M_SOL = new MATRIZ(true);
         UI inter = new UI();
+        String[][] copia_inicio;
+        copia_inicio = M_JUEGO.get();
+        inter.imprimirTablero(copia_inicio);
 
         inter.imprimirTablero(M_JUEGO.get());
 
-    
-
-        int opcion;
+        int opcion = 2;
 
         System.out.println("¿Qué deseas hacer?");
         System.out.println("1. Jugar el Puzzle 15");
         System.out.println("2. Que el sistema lo arme solo");
-        opcion = sc.nextInt();
+//        opcion = sc.nextInt();
 
         if (opcion == 1) {
             // ===== MODO JUGAR =====
@@ -40,8 +41,16 @@ public class P15 {
 
             ordenar(M_JUEGO);
 
-      
             System.out.println("Después de ordenar:");
+            if (!M_JUEGO.equals(M_SOL)) {
+                System.out.println("-----------------No lo logrooo-----------");
+                System.out.println("tienes que revisar bien que pasa con ");
+                inter.imprimirTablero(copia_inicio);
+                sc.next();
+                ordenar(M_JUEGO);
+            } else {
+                System.out.println("todo melo");
+            }
 
         } else {
             System.out.println("Opción inválida.");
@@ -309,73 +318,23 @@ public class P15 {
         ///
         Scanner sc = new Scanner(System.in);
 
-        int[] encontrado = O.buscarN(2);
+        int[] encontrado;
 
-        if (encontrado[0] != 2 || encontrado[1] != 2) {
-            while (encontrado[0] != 2 || encontrado[1] != 3 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 2) {
-                O.GirarH();
-                O.imprimirTablero();
-                encontrado = O.buscarN(2);
-            }
-
-            O.Movimiento(2);
-            O.Movimiento(4);
-
-        }
-        System.out.println("el 2 esta en 2 2 ");
-
-        encontrado = O.buscarN(1);
-        while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
-
-            O.GirarH();
-            encontrado = O.buscarN(1);
-
-        }
-
-        System.out.println("el 1 esta en posicion pora gusano");
-
-        O.Movimiento(6);
-        O.Movimiento(8);
-
-        System.out.println("ahora vamos con el siguiente");
-
-        System.out.println("buscanco el 3 ");
-        encontrado = O.buscarN(3);
-
-        if (encontrado[0] != 2 || encontrado[1] != 2) {
-
-            while (encontrado[0] != 2 || encontrado[1] != 3 || O.getBlanco()[0] != 3 || O.getBlanco()[1] != 2) {
-                O.GirarH();
-                O.imprimirTablero();
-                encontrado = O.buscarN(3);
-            }
-            O.Movimiento(2);
-            O.Movimiento(4);
-
-        }
-
-        encontrado = O.buscarN(2);
-        while (encontrado[0] != 1 || encontrado[1] != 3 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
-
-            O.GirarH();
-            encontrado = O.buscarN(2);
-
-        }
-
-        System.out.println("el 3 esta en posicion para gusano ");
-        System.out.println("el 2 esta en posicion pora gusano");
-        O.Movimiento(6);
-        O.Movimiento(8);
-
+        meterGusano(O, 1, 5);
+        meterGusano(O, 2, 1);
+        meterGusano(O, 3, 2);
         meterGusano(O, 4, 3);
+        
         meterGusano(O, 8, 4);
         meterGusano(O, 12, 8);
-        meterGusano(O, 15, 12);
+        
+       
+        meterGusano(O, 15, 12); 
+      
 
         meterGusano(O, 14, 15);
         meterGusano(O, 13, 14);
         meterGusano(O, 9, 13);
-        meterGusano(O, 5, 9);
 
         O.imprimirTablero();
 
@@ -390,9 +349,11 @@ public class P15 {
     }
 
     public static void meterGusano(MATRIZ O, int a, int b) {
+        Scanner sc = new Scanner(System.in);
 
-        System.out.println("vamos con el 12");
-        System.out.println("buscanco el 12 ");
+       
+        System.out.println("vamos con el " + a);
+        System.out.println("buscanco el  ");
         int[] encontrado = O.buscarN(a);
 
         if (encontrado[0] != 2 || encontrado[1] != 2) {
@@ -402,9 +363,28 @@ public class P15 {
                 O.imprimirTablero();
                 encontrado = O.buscarN(a);
             }
-            O.Movimiento(2);
-            O.Movimiento(4);
+            // si el 1 esta en la posicon 3 3 entonces vamos a tener que moverlo 
 
+            if (O.buscarN(1)[0] == 3 && O.buscarN(1)[1] == 3) {
+                System.out.println("caso especial");
+
+                while (encontrado[0] != 3 || encontrado[1] != 2 || O.getBlanco()[0] != 2 || O.getBlanco()[1] != 3) {
+                    O.GirarH();
+                    O.imprimirTablero();
+                    encontrado = O.buscarN(a);
+                }
+
+                System.out.println("vamos a meter a " + a + "en " + b);
+
+                O.Movimiento(6);
+                O.Movimiento(8);
+                System.out.println("terminacion de caso especial");
+
+            } else {
+
+                O.Movimiento(2);
+                O.Movimiento(4);
+            }
         }
 
         encontrado = O.buscarN(b);
