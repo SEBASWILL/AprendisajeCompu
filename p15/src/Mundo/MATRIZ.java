@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package p15;
+package Mundo;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,54 +20,19 @@ public class MATRIZ {
     private int y;
     private int pasos = 0;
 
-    //SOL
-//    public MATRIZ(boolean A) {
-//        if (!A){
-//        /// quiero que el 6 este en la posicion x = 1 y=2
-//        /// el resto de numeros no me importan 
-//        }else{
-//        M = new String[tamaño][tamaño];
-//        int contador_p = 1;
-//
-//        for (int i = 0; i < M.length; i++) {
-//            for (int j = 0; j < M[i].length; j++) {
-//
-//                if (i == M.length - 1 && j == M[i].length - 1) {
-//                    M[i][j] = " ";
-//                    x = i;
-//                    y = j;
-//                } else {
-//                    M[i][j] = String.valueOf(contador_p);
-//                    contador_p++;
-//                }
-//            }
-//        }
-//        }
-//    }
     public MATRIZ(boolean A) {
 
         M = new String[tamaño][tamaño];
         int contador_p = 1;
 
         if (!A) {
+            System.out.println("prueba");
 
-//            for (int i = 0; i < M.length; i++) {
-//                for (int j = 0; j < M[i].length; j++) {
-//                    if (i == tamaño - 1 && j == tamaño - 1) {
-//                        M[i][j] = " ";
-//                        x = i;
-//                        y = j;
-//                    } else {
-//                        M[i][j] = String.valueOf(contador_p);
-//                        contador_p++;
-//                    }
-//                }
-//            }
             String[] valores = {
                 "1", "2", "3", "4",
                 "5", "6", "7", "8",
                 "9", "10", "11", "12",
-                "15", "13", "14", " "
+                "13", "14", "15", " "
             };
 
             int k = 0;
@@ -96,7 +61,6 @@ public class MATRIZ {
         }
     }
 
-    // JUEGO
     public MATRIZ() {
         M = new String[tamaño][tamaño];
 
@@ -304,63 +268,55 @@ public class MATRIZ {
 
     private void sacarDelCentro() {
 
-        // Mientras siga en el centro
         while (x >= 1 && x <= 2 && y >= 1 && y <= 2) {
 
-            // Prioridad: subir
             if (x > 0) {
-                Movimiento_al(2); // arriba
-            } // Si no puede subir, bajar
-            else if (x < 3) {
-                Movimiento_al(8); // abajo
-            } // Si no, izquierda
-            else if (y > 0) {
-                Movimiento_al(6); // izquierda
-            } // Última opción: derecha
-            else if (y < 3) {
-                Movimiento_al(4); // derecha
+                Movimiento_al(2);
+            } else if (x < 3) {
+                Movimiento_al(8);
+            } else if (y > 0) {
+                Movimiento_al(6);
+            } else if (y < 3) {
+                Movimiento_al(4);
             }
         }
     }
 
     public void GirarH() {
-        // COLUMNA IZQUIERDA
+
         if (y == 0) {
             if (x < 3) {
-                Movimiento(8); // abajo
+                Movimiento(8);
             } else {
-                Movimiento(4); // derecha
+                Movimiento(4);
             }
 
             return;
         }
 
-        // FILA INFERIOR
         if (x == 3) {
             if (y < 3) {
-                Movimiento(4); // derecha
+                Movimiento(4);
             } else {
-                Movimiento(2); // arriba
+                Movimiento(2);
             }
             return;
         }
 
-        // COLUMNA DERECHA
         if (y == 3) {
             if (x > 0) {
-                Movimiento(2); // arriba
+                Movimiento(2);
             } else {
-                Movimiento(6); // izquierda
+                Movimiento(6);
             }
             return;
         }
 
-        // FILA SUPERIOR
         if (x == 0) {
             if (y > 0) {
-                Movimiento(6); // izquierda
+                Movimiento(6);
             } else {
-                Movimiento(8); // abajo
+                Movimiento(8);
             }
             return;
         }
