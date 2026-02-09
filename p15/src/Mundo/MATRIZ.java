@@ -4,9 +4,9 @@
  */
 package Mundo;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
@@ -19,6 +19,13 @@ public class MATRIZ {
     private int x;
     private int y;
     private int pasos = 0;
+    private Runnable actualizarInterfaz;
+    private ArrayList<Integer> lista;
+    
+
+    public void setActualizarInterfaz(Runnable r) {
+        this.actualizarInterfaz = r;
+    }
 
     public MATRIZ(boolean A) {
 
@@ -60,6 +67,29 @@ public class MATRIZ {
 
         }
     }
+    
+    public void setpasos(){
+    pasos=0;
+    }
+    
+   
+
+    public void aletorio() {
+        Random rand = new Random();
+        
+        int a;
+        System.out.println("moviendo aleatoriamente");
+        for (int i = 0; i < 1000; i++) {
+            a = rand.nextInt(lista.size());
+
+            Movimiento_al(a);
+
+        }
+        System.out.println("listo");
+
+    }
+
+    ;
 
     public MATRIZ() {
         M = new String[tamaño][tamaño];
@@ -79,8 +109,7 @@ public class MATRIZ {
                 }
             }
         }
-        Random rand = new Random();
-        ArrayList<Integer> lista = new ArrayList<>();
+        lista = new ArrayList<>();
         lista.add(8);
         lista.add(6);
         lista.add(4);
@@ -124,14 +153,8 @@ public class MATRIZ {
         lista.add(4);
         lista.add(2);
 
-        int a;
-        System.out.println("moviendo aleatoriamente");
-        for (int i = 0; i < 100000000; i++) {
-            a = rand.nextInt(lista.size());
 
-            Movimiento_al(a);
-
-        }
+        aletorio();
 
     }
 
@@ -216,6 +239,15 @@ public class MATRIZ {
         }
         imprimirTablero();
         pasos++;
+        if (actualizarInterfaz != null) {
+            actualizarInterfaz.run();
+        }
+        try {
+            Thread.sleep(5); // 1 segundo
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
     }
 
     public int[] getBlanco() {
@@ -250,6 +282,10 @@ public class MATRIZ {
                 Change(y + 1, x);
             }
         }
+        if (actualizarInterfaz != null) {
+            actualizarInterfaz.run();
+        }
+        pasos = 0;
 
     }
 
@@ -271,13 +307,13 @@ public class MATRIZ {
         while (x >= 1 && x <= 2 && y >= 1 && y <= 2) {
 
             if (x > 0) {
-                Movimiento_al(2);
+                Movimiento(2);
             } else if (x < 3) {
-                Movimiento_al(8);
+                Movimiento(8);
             } else if (y > 0) {
-                Movimiento_al(6);
+                Movimiento(6);
             } else if (y < 3) {
-                Movimiento_al(4);
+                Movimiento(4);
             }
         }
     }
@@ -355,5 +391,34 @@ public class MATRIZ {
         }
         return true;
     }
+    public void intmvover(int x, int y) {
+    // posición actual del blanco: this.x , this.y
+
+    // la ficha está ARRIBA del blanco
+    if (x == this.x - 1 && y == this.y) {
+        Movimiento(2);
+        return;
+    }
+
+    // la ficha está ABAJO del blanco
+    if (x == this.x + 1 && y == this.y) {
+        Movimiento(8);
+        return;
+    }
+
+    // la ficha está a la IZQUIERDA del blanco
+    if (x == this.x && y == this.y - 1) {
+        Movimiento(6);
+        return;
+    }
+
+    // la ficha está a la DERECHA del blanco
+    if (x == this.x && y == this.y + 1) {
+        Movimiento(4);
+        return;
+    }
+
+    System.out.println("Movimiento inválido: no está junto al blanco");
+}
 
 }
